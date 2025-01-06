@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# grep pour recupérer uniquement les inet (IPv4)
+# awk pour récupérer la deuxième colone qui correspond à l'adresse ip
+ifconfig | grep "inet " | awk '{print $2}'
