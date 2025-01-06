@@ -1,3 +1,3 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # netstat to display listening (-l) ports and the PID associated (-p)
 netstat -lp
