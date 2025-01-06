@@ -1,2 +1,4 @@
 #!/usr/bin/env bash
+# netcat qui écoute les connexions entrantes (-l pour "listen")
+# et le port à écouter (98)
 nc -l 98
