@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/bin/bash
 # check if the numbers of args is equal to 0 if true display a message,
 # else repeat 5 time the command ping with the passed argument
 if [ $# -eq 0 ]; then
