@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# fait une sauvegarde du fichier hosts dans hosts.backup
+cp /etc/hosts /etc/hosts.backup
+# supprime le contenue initial du fichier hosts
+echo -n > /etc/hosts
+# modifie l'adresse localhost
+bash -c 'echo "127.0.0.2 localhost" >> /etc/hosts'
+# modifie l'adresse facebook.com
+bash -c 'echo "8.8.8.8 facebook.com" >> /etc/hosts'
