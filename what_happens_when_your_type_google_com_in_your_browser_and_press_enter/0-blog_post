@@ -1,0 +1,97 @@
+1. DNS Resolution
+
+When you type https://www.google.com and press Enter, your browser first needs to find out where Google's servers are located.
+This process is called DNS resolution:
+    1. First the browser check in this cache if it already knows Google's IP address
+    2. If not found, it asks your operating system's DNS resolver (local DNS)
+    3. If still not found, it's ask the DNS server provided by the ISP (FAI) configured by the DHCP protocole
+    4. The DNS server may need to:
+        - Ask root nameservers about .com servers
+        - Ask .com servers about google.com
+        - Ask google.com nameservers about www.google.com
+    5. Finally, the browser receives Google's IP adress (ex: 142.250.xx.xxx)
+
+2. TCP/IP Connection
+
+With the IP address, the browser establishes a network connection:
+    1. The computer create an IP packet with the destination IP address
+    2. The packet is encapsulated it TCP protocol (port 443 for HTTPS)
+    3. The network interface sends the packet through the local network
+    4. The routers forward the packet across the internet using BGP (Border Gateway Protocol) and other routing protocols
+    5. The packet arrives at Google's network infrastructure
+
+3. Firewall Check
+
+Before reaching Google's servers, the traffic passes through various security layers:
+    1. Your computer's local firewall checks if outbound HTTPS traffic is allowed
+    2. Google's perimeter firewalls examine incoming traffic
+    3. Traffic is screened for:
+        - Source IP reputation
+        - Rate limiting
+        - DDos protection
+        - Malicious patterns
+
+4. HTTPS/SSL Handshake
+
+Once the TCP connection is established, secure communication begins:
+    1. Your browser and Google's server perform a TLS handshake:
+        - Client sends "Client Hello" with supported cipher suites
+        - Server responds with certificate and chosen cipher
+        - Both sides exchange keys and establish encrypted session
+    2. All subsequent communication is encrypted
+    3. Browser validates Google's SSL certificate against trusted root certificates
+
+5. Load Balancer Processing
+Google's load balancers distribute traffic across their infrastructure:
+    1. Load balancer receives the encrypted request
+    2. It makes routing decisions based on:
+        - Server health
+        - Geographic location
+        - Current load
+        - Request characteristics
+    3. The request is forwarded to the most appropriate web server
+
+6. Web Server Handling
+A web server receives and processes the HTTP request:
+    1. Web server decrypts the request
+    2. It parses the HTTP headers and reuest path
+    3. Performs initial request validation
+    4. May serve static content directly
+    5. Routes dynamic requests to application servers
+
+7. Application Server Processing
+Google's application servers handle the business logic:
+    1. Application server receives the request
+    2. Authenticates user if needed
+    3. Processes search parameters or other user input
+    4. Orchestrates various internal services
+    5. Implements business logic and search algorithms
+    6. Prepares response data
+
+8. Database Interaction
+Multiple database systems are involved:
+    1. Application queries relevant databases for:
+        - User data
+        - Search indexes
+        - Cached results
+    2. Various database types are used:
+        - NoSQL for user sessions
+        - Distributed databases for search data
+        - Caching layers like Redis
+    3. Results are aggregated and formatted
+
+# Return Process
+
+1. The response follows the reverse path:
+    1. Application server formats the response
+    2. Web server sends it through the load balancer
+    3. Data is encrypted with HTTPS
+    4. TCP ensures reliable delivery
+    5. Your browser renders the Google search page
+
+2. Throughout this entire process, which typically takes just a few hundred milliseconds:
+    1. Multiple security checks are performed
+    2. Redundant systems ensure reliability
+    3. Geographic distribution optimizes speed
+    4. Caching occurs at various levels
+    5. Monitoring systems track performance
